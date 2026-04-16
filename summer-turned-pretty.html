@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Summer I Turned Pretty</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+   <link rel="stylesheet" href="css/style1.css">
+
+   <style>
+            * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            }
+
+            body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background: hsl(15, 80%, 90%);
+            color: #f26969;
+            }
+
+            /* Navigation */
+            nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background:hsl(15, 80%, 90%);
+            padding: 1rem;
+            text-align: center;
+            }
+
+            nav a {
+            margin: 0 1rem;
+            text-decoration: none;
+            color: #f26969;
+            font-weight: bold;
+            }
+
+            /* Hero */
+            .hero {
+            height: 100vh;
+            background: hsl(15, 80%, 90%);
+            background-image: url("assets/img/TSITP.png");
+                background-size: cover;    
+                background-position: center; 
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 60px;
+            }
+
+            .hero h1 {
+            font-size: 3rem;
+            }
+
+            .hero-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: #f26969;
+            color: hsl(15, 80%, 90%);
+            text-decoration: none;
+            }
+
+            /* Sections */
+            section, #teams, #trailer {
+            padding: 4rem 2rem;
+            max-width: 900px;
+            margin: auto;
+            }
+
+            h2 {
+            margin-bottom: 1rem;
+            }
+
+            /* About grid */
+            .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            }
+
+            .about-img {
+            width: 100%;
+            }
+
+            /* Teams */
+            .teams-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            }
+
+            .team-box {
+            padding: 1rem;
+            border: 1px solid hsl(15, 80%, 90%);
+            }
+
+            /* Tableau */
+            tableau-viz {
+            width: 100%;
+            height: 900px;
+            margin-top: 2rem;
+            }
+
+            /* Video */
+            .video-wrapper {
+            margin-top: 2rem;
+            }
+
+            /* Footer */
+            footer {
+            text-align: center;
+            padding: 2rem;
+            background: hsl(15, 80%, 90%);
+            margin-top: 2rem;
+            }
+   </style>
+
+   <head>
+    <Body>
+    <!-- Navigation with on-page anchors -->
+    <nav>
+        <a href= "index.html">Resume/Home</a>
+        <a href="#about">About</a>
+        <a href="#teams">Teams</a>
+        <a href="#trailer">Trailer</a>
+        <a href="utah-name-generator.html">Name Generator</a>
+    </nav>
+
+    <!-- ① Hero -->
+    <div class="hero">
+        <div class="hero-text">
+            <h1>The Summer<br/><em>I Turned Pretty</em></h1>
+            <p>Amazon Prime Video &nbsp;·&nbsp; Based on the novel by Jenny Han</p>
+            <a class="hero-btn" href="#about">Explore ↓</a>
+        </div>
+    </div>
+
+    <!-- ② About — ON-PAGE ANCHOR -->
+    <section id="about">
+        <div class="about-grid">
+            <div>
+                <p class="section-label">The Show</p>
+                <h2>A summer that changes everything</h2>
+                <p>
+                    <em>The Summer I Turned Pretty</em> follows Belly Conklin, who has spent every summer of her life at Cousins Beach with her family and her mom's best friend Susannah Fisher and her two sons — the brooding Conrad and the charming Jeremiah.
+                </p>
+                <p>
+                    But this summer is different. Belly is different. And the love triangle that unfolds will change all of them forever.
+                </p>
+                <p>
+                    The Amazon Prime Video series premiered in June 2022 and quickly became a cultural phenomenon, praised for its heartfelt performances, gorgeous cinematography, and incredible soundtrack.
+                </p>
+            </div>
+            <img
+                class="about-img"
+                src="https://upload.wikimedia.org/wikipedia/en/thumb/9/91/The_Summer_I_Turned_Pretty.jpg/250px-The_Summer_I_Turned_Pretty.jpg"
+                alt="The Summer I Turned Pretty Season 1 poster"
+            />
+        </div>
+    </section>
+
+    <hr class="divider" style="max-width:900px;" />
+
+    <!-- ④ Teams — NESTED LISTS (ordered list with unordered sub-lists) — ON-PAGE ANCHOR -->
+    <div id="teams">
+        <div class="inner">
+            <p class="section-label">The Great Debate</p>
+            <h2>Team Conrad vs. Team Jeremiah</h2>
+            <p>The show's biggest question: who deserves Belly's heart? Here are the top reasons fans are devoted to each side.</p>
+
+            <div class="teams-grid">
+                <!-- Ordered list containing unordered sub-lists -->
+                <div class="team-box conrad">
+                    <h3>Team Conrad 🌊</h3>
+                    <ol class="reasons">
+                        <li>He has depth and mystery
+                            <ul>
+                                <li>His grief arc is quietly devastating</li>
+                                <li>There's always more beneath the surface</li>
+                            </ul>
+                        </li>
+                        <li>The first love connection is undeniable
+                            <ul>
+                                <li>Belly has loved him her entire life</li>
+                                <li>Their history makes every moment electric</li>
+                            </ul>
+                        </li>
+                        <li>He pushes Belly to grow
+                            <ul>
+                                <li>Challenges her in ways others don't</li>
+                                <li>Their tension drives real character development</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="team-box jeremiah">
+                    <h3>Team Jeremiah ☀️</h3>
+                    <ol class="reasons">
+                        <li>He actually communicates his feelings
+                            <ul>
+                                <li>No guessing games or mixed signals</li>
+                                <li>Says what he means, means what he says</li>
+                            </ul>
+                        </li>
+                        <li>He's consistently there for Belly
+                            <ul>
+                                <li>Shows up without being asked</li>
+                                <li>Prioritizes her happiness genuinely</li>
+                            </ul>
+                        </li>
+                        <li>His energy is contagious
+                            <ul>
+                                <li>Brings joy and warmth to every scene</li>
+                                <li>The kind of partner who makes life brighter</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ <!-- Tableau Embedding API -->
+        <script type="module"
+            src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js">
+        </script>
+
+        <h2>Happy World Map (Live)</h2>
+            <h4>Belly moves to France in season 3 because it's very high up on the happy scale! 
+                This is important to her because she just left her fiance at the altar.</h4>
+        <tableau-viz
+            id="tableauViz"
+            src="https://public.tableau.com/views/HAPPYWORLD_17761554830740/Dashboard1"
+            toolbar="bottom"
+            hide-tabs
+            width="100%"
+            height="900">
+        </tableau-viz>
+
+        <script>
+            const viz = document.getElementById("tableauViz");
+
+            // Auto-refresh every 20 seconds
+            setInterval(async () => {
+            await viz.refreshDataAsync();
+            console.log("Refreshed Tableau data");
+            }, 20000);
+        </script>
+
+    <!-- ⑥ YouTube Trailer — ON-PAGE ANCHOR -->
+    <div id="trailer">
+        <p class="section-label">Watch Now</p>
+        <h2>Official Trailer</h2>
+        <p>Season 2 official trailer</p>
+        <!--
+            YouTube embed: replace the ID in the src URL to change the video.
+            Format: https://www.youtube.com/embed/VIDEO_ID
+            The ?rel=0 stops YouTube from showing unrelated videos after it plays.
+        -->
+        <div class="video-wrapper">
+            <iframe
+                src="https://www.youtube.com/embed/G7GIGtAZSGQ?rel=0"
+                title="The Summer I Turned Pretty Season 2 — Official Trailer"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Courtney Bell &nbsp;·&nbsp; Fan page for <em>The Summer I Turned Pretty</em> &nbsp;·&nbsp; All rights belong to Amazon Prime Video &amp; Jenny Han</p>
+    </footer>
+
+</body>
+</html>

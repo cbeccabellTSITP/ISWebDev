@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Utah Name Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 1rem;
+      color: #f0f0f0;
+    }
+    .app { max-width: 640px; width: 100%; }
+    .header { text-align: center; margin-bottom: 2rem; }
+    .header h1 { font-size: 2.4rem; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 0.5rem; }
+    .header h1 span { color: #e8a0bf; }
+    .header p { font-size: 1rem; color: rgba(255,255,255,0.6); font-style: italic; }
+    .card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 1.5rem; backdrop-filter: blur(10px); margin-bottom: 1.5rem; }
+    .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    select { flex: 1; min-width: 150px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; padding: 10px 14px; font-size: 14px; font-family: 'Nunito', sans-serif; color: #fff; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='white' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+    select option { background: #1a1a2e; color: #fff; }
+    select:focus { outline: none; border-color: #e8a0bf; }
+    button#genBtn { background: linear-gradient(135deg, #e8a0bf, #c670a0); border: none; border-radius: 10px; padding: 10px 22px; font-size: 14px; font-weight: 700; font-family: 'Nunito', sans-serif; color: #fff; cursor: pointer; white-space: nowrap; transition: opacity 0.2s, transform 0.1s; }
+    button#genBtn:hover { opacity: 0.9; transform: translateY(-1px); }
+    button#genBtn:active { transform: scale(0.97); }
+    .names-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+    .name-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 1rem 1.1rem; transition: transform 0.2s, border-color 0.2s; animation: fadeIn 0.3s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .name-card:hover { transform: translateY(-3px); border-color: rgba(232,160,191,0.5); }
+    .name-card .name { font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 6px; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 99px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .badge-boy   { background: rgba(55,138,221,0.25); color: #85b7eb; border: 1px solid rgba(55,138,221,0.3); }
+    .badge-girl  { background: rgba(212,83,126,0.25); color: #ed93b1; border: 1px solid rgba(212,83,126,0.3); }
+    .badge-either{ background: rgba(127,119,221,0.25); color: #afa9ec; border: 1px solid rgba(127,119,221,0.3); }
+    .name-card .why { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+    .history-section { margin-bottom: 1.5rem; }
+    .history-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+    .history-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .history-pill { font-size: 12px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); border-radius: 99px; padding: 3px 12px; border: 1px solid rgba(255,255,255,0.1); }
+    footer { text-align: center; margin-top: 2rem; font-size: 12px; color: rgba(255,255,255,0.3); }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <h1>Utah Name <span>Generator</span></h1>
+    <p>Because every Jayden deserves to be a Jaydynne</p>
+  </div>
+
+  <div class="card">
+    <div class="controls">
+      <select id="gender">
+        <option value="any">Any gender</option>
+        <option value="boy">Boy names</option>
+        <option value="girl">Girl names</option>
+      </select>
+      <select id="style">
+        <option value="any">Any style</option>
+        <option value="ys">Extra Y's</option>
+        <option value="creative">Creative spellings</option>
+        <option value="mashup">Mashups</option>
+        <option value="nature">Nature-inspired</option>
+      </select>
+      <button id="genBtn" onclick="generate()">Generate ✨</button>
+    </div>
+  </div>
+
+  <div id="historySection" class="history-section" style="display:none">
+    <p class="history-label">Names generated this session</p>
+    <div class="history-pills" id="historyRow"></div>
+  </div>
+
+  <div id="output"></div>
+  <footer>A loving tribute to Utah baby naming culture</footer>
+</div>
+
+<script>
+const NAMES = [
+  { name:"Brynleigh",   gender:"girl",  style:"ys",       why:"Brynley wasn't fancy enough — added a silent GH for class." },
+  { name:"Jaxxon",      gender:"boy",   style:"creative", why:"Jackson needed more X's. One was simply not enough." },
+  { name:"Kynzleigh",   gender:"girl",  style:"ys",       why:"Kinsley, but impossible to spell on the first try." },
+  { name:"Daxxtyn",     gender:"boy",   style:"creative", why:"Daxton already had an X — why not double down?" },
+  { name:"Presleigh",   gender:"girl",  style:"ys",       why:"Elvis would be both confused and honored." },
+  { name:"Brycen",      gender:"boy",   style:"creative", why:"Bryson said 'what if I swapped my son for a cen?'" },
+  { name:"Addysyn",     gender:"girl",  style:"ys",       why:"Addison reimagined for the Y-obsessed generation." },
+  { name:"Thayne",      gender:"boy",   style:"creative", why:"Thane needed an extra letter to feel complete." },
+  { name:"Raelynn",     gender:"girl",  style:"mashup",   why:"Rae plus Lynn equals twice the blessing." },
+  { name:"Kash",        gender:"boy",   style:"creative", why:"Cash, but spelled like a lifestyle brand." },
+  { name:"Brexlee",     gender:"girl",  style:"mashup",   why:"Brekelyn and Lexie had a baby and named it Brexlee." },
+  { name:"Ryker",       gender:"boy",   style:"creative", why:"Riker from Star Trek, Utah-ified with a Y." },
+  { name:"Avynlee",     gender:"girl",  style:"ys",       why:"Avonlea from Anne of Green Gables, but with more Y." },
+  { name:"Zayden",      gender:"boy",   style:"ys",       why:"Aiden needed a Z and a Y. Challenge accepted." },
+  { name:"Emmylee",     gender:"girl",  style:"ys",       why:"Emily went through a full spelling makeover." },
+  { name:"Coltyn",      gender:"boy",   style:"ys",       why:"Colton traded its O for a Y without asking permission." },
+  { name:"Shayndee",    gender:"girl",  style:"creative", why:"Shandi, but spelled how it sounds in a canyon echo." },
+  { name:"Bridger",     gender:"boy",   style:"nature",   why:"Named after every mountain bridge within 50 miles." },
+  { name:"Riversong",   gender:"girl",  style:"nature",   why:"River plus Song equals pure Utah canyon magic." },
+  { name:"Oaklynn",     gender:"girl",  style:"nature",   why:"Oak trees meet Lynn. Nature and syllables unite." },
+  { name:"Rockwell",    gender:"boy",   style:"nature",   why:"Nothing says Utah like naming your son after a rock." },
+  { name:"Saygee",      gender:"girl",  style:"creative", why:"Sage, stretched out so it takes longer to call her in." },
+  { name:"Jaxleigh",    gender:"boy",   style:"mashup",   why:"Jackson and Ashleigh collided at a ward activity." },
+  { name:"Maesynne",    gender:"girl",  style:"creative", why:"Mason's cousin who got all the extra vowels." },
+  { name:"Stormie",     gender:"girl",  style:"nature",   why:"Named after the weather event during testimony meeting." },
+  { name:"Kynnleigh",   gender:"girl",  style:"ys",       why:"Kinley got two Y's and a silent GH for the holidays." },
+  { name:"Branxton",    gender:"boy",   style:"mashup",   why:"Braxton and Weston merged into one powerful name." },
+  { name:"Gracelyn",    gender:"girl",  style:"mashup",   why:"Grace met Kaytlyn and they never looked back." },
+  { name:"Merricke",    gender:"boy",   style:"creative", why:"Merrick with a silent E so it looks more distinguished." },
+  { name:"Aspynn",      gender:"girl",  style:"nature",   why:"Aspen is a tree. Aspynn is a lifestyle." },
+  { name:"Creedyn",     gender:"boy",   style:"ys",       why:"Creed gained a Y and doubled its pioneer energy." },
+  { name:"Blayklee",    gender:"girl",  style:"creative", why:"Blakely decided vowels were optional and consonants negotiable." },
+  { name:"Ledger",      gender:"boy",   style:"creative", why:"Named after financial responsibility and Heath Ledger." },
+  { name:"Paysleigh",   gender:"girl",  style:"ys",       why:"Paisley went through four spelling revisions in the hospital." },
+  { name:"Tagg",        gender:"boy",   style:"creative", why:"Tag, but double-G so it feels more substantial." },
+  { name:"Raynee",      gender:"girl",  style:"nature",   why:"Rain is the event. Raynee is the vibe." },
+  { name:"Kanyon",      gender:"boy",   style:"nature",   why:"Canyon but spelled so he knows he's unique." },
+  { name:"Alyssynne",   gender:"girl",  style:"creative", why:"Alison gained three extra letters on the way home." },
+  { name:"Brixtyn",     gender:"boy",   style:"ys",       why:"Brixton dropped its O and picked up a Y in Provo." },
+  { name:"Daylee",      gender:"girl",  style:"ys",       why:"Daily affirmations, now also a baby name." },
+  { name:"Steele",      gender:"boy",   style:"creative", why:"Steel, but with an E so it feels more refined." },
+  { name:"Saylorie",    gender:"girl",  style:"mashup",   why:"Sailor and Valorie combined at a family reunion." },
+  { name:"Trezyn",      gender:"boy",   style:"creative", why:"Treson minus the O plus a Y equals Utah originality." },
+  { name:"Wrenleigh",   gender:"girl",  style:"mashup",   why:"Wren met Ashleigh on a hiking trail. The rest is history." },
+  { name:"Gauge",       gender:"boy",   style:"creative", why:"Named after the tool. Pronounced 'Gage.' Spelled to confuse." },
+  { name:"Junipyr",     gender:"girl",  style:"nature",   why:"Juniper swapped its E for a Y to stand out." },
+  { name:"Remmington",  gender:"boy",   style:"creative", why:"Remington gained an extra M for extra firepower." },
+  { name:"Bexlee",      gender:"girl",  style:"mashup",   why:"Bex and Ashlee hiked the Y together and merged permanently." },
+  { name:"Huxlynn",     gender:"boy",   style:"mashup",   why:"Huxley and Lynn walked into a baby naming app." },
+  { name:"Jocelynne",   gender:"girl",  style:"creative", why:"Jocelyn needed a silent E at the end just because." },
+  { name:"Brigg",       gender:"boy",   style:"creative", why:"Briggs dropped the S and doubled the G. Net zero letters." },
+  { name:"Skylour",     gender:"girl",  style:"nature",   why:"Skylar got a French makeover without visiting France." },
+  { name:"Hendrix",     gender:"boy",   style:"creative", why:"Named after Jimi but raised on hymns." },
+  { name:"Lyllian",     gender:"girl",  style:"creative", why:"Lillian replaced both I's with Y's in one bold move." },
+  { name:"Caige",       gender:"boy",   style:"creative", why:"Cage, but spelled so the substitute teacher panics." },
+  { name:"Andaleigh",   gender:"girl",  style:"ys",       why:"Andie gained a whole extra syllable no one asked for." },
+  { name:"Zexton",      gender:"boy",   style:"creative", why:"Sexton started with a Z. No further explanation needed." },
+  { name:"Ellorie",     gender:"girl",  style:"mashup",   why:"Ellie and Valorie combined in a church parking lot." },
+  { name:"Trexton",     gender:"boy",   style:"creative", why:"Trex was taken. Added 'ton' to make it more frontier." },
+  { name:"Magnolya",    gender:"girl",  style:"nature",   why:"Magnolia but the A at the end felt too predictable." },
+  { name:"Dryden",      gender:"boy",   style:"creative", why:"Sounds like weather and ambition at the same time." },
+  { name:"Raelynne",    gender:"girl",  style:"ys",       why:"Raelyn needed one more N to really commit." },
+  { name:"Brogan",      gender:"boy",   style:"creative", why:"An Irish shoe repurposed as a Utah first name." },
+  { name:"Kambrie",     gender:"girl",  style:"creative", why:"Cambria lost its C. Found a K. Kept the vibes." },
+  { name:"Stetson",     gender:"boy",   style:"nature",   why:"Named after a hat. Cowboys are culture here." },
+  { name:"Cloverleigh", gender:"girl",  style:"nature",   why:"Clover plus leigh equals too much Utah in one name." },
+  { name:"Westin",      gender:"boy",   style:"creative", why:"Weston got a trim. Now also a hotel chain." },
+  { name:"Harleigh",    gender:"girl",  style:"ys",       why:"Harley got feminized, elongated, and sent to Provo." },
+  { name:"Caspyn",      gender:"boy",   style:"creative", why:"Casper the ghost, now with a Y and less haunting." },
+  { name:"Zylah",       gender:"girl",  style:"creative", why:"Zyla got an H for no reason and loves it." },
+  { name:"Colter",      gender:"boy",   style:"nature",   why:"A mountain man name for a boy who will love the outdoors." },
+  { name:"Teagynn",     gender:"girl",  style:"creative", why:"Teagan doubled its N just to keep everyone guessing." },
+  { name:"Thatcher",    gender:"boy",   style:"creative", why:"Named after a prime minister. Lives in Lehi." },
+  { name:"Emberlynne",  gender:"girl",  style:"mashup",   why:"Ember and Lynne combined into one very warm name." },
+];
+
+const allGenerated = [];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function generate() {
+  const gender = document.getElementById('gender').value;
+  const style  = document.getElementById('style').value;
+
+  let pool = NAMES.filter(n => {
+    const gMatch = gender === 'any' || n.gender === gender || n.gender === 'either';
+    const sMatch = style  === 'any' || n.style  === style;
+    return gMatch && sMatch;
+  });
+
+  if (pool.length < 4) pool = shuffle(NAMES);
+
+  const picks = shuffle(pool).slice(0, 4);
+
+  document.getElementById('output').innerHTML =
+    '<div class="names-grid">' +
+    picks.map((n, i) => `
+      <div class="name-card" style="animation-delay:${i * 0.07}s">
+        <p class="name">${n.name}</p>
+        <span class="badge badge-${n.gender}">${n.gender}</span>
+        <p class="why">${n.why}</p>
+      </div>`).join('') +
+    '</div>';
+
+  picks.forEach(n => allGenerated.push(n.name));
+  updateHistory();
+}
+
+function updateHistory() {
+  if (!allGenerated.length) return;
+  document.getElementById('historySection').style.display = 'block';
+  document.getElementById('historyRow').innerHTML =
+    allGenerated.map(n => `<span class="history-pill">${n}</span>`).join('');
+}
+
+generate();
+</script>
+</body>
+</html>
